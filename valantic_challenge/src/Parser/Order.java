@@ -12,6 +12,10 @@ public class Order {
 
     private int amount_customers;
 
+    private String day;
+
+    private String daytime;
+
     public Order() {
         Calendar zero = Calendar.getInstance();
         zero.set(0, 0, 0, 0, 0, 0);
@@ -42,10 +46,27 @@ public class Order {
         this.amount_customers = amount_customers;
     }
 
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getDaytime() {
+        return daytime;
+    }
+
+    public void setDaytime(String daytime) {
+        this.daytime = daytime;
+    }
+
     @Override
     public String toString() {
         return  name +
                 ", " + time +
+                " (" + day + " " + daytime + ")" +
                 ", für: " + amount_customers + " Person(en)";
     }
 }

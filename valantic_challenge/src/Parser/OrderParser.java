@@ -33,29 +33,48 @@ public class OrderParser {
                     current.contains(".") && months.containsKey(order_each[i+1].toLowerCase())) {
 
                 int day = Integer.parseInt(current.split("\\.")[0]);
+                int month = 0;
 
                 if (current.contains(".") && months.containsKey(order_each[i+1].toLowerCase())) {
-                    order_date.set(order_date.get(Calendar.YEAR), months.get(order_each[i+1].toLowerCase())-1, day);
+                    month = months.get(order_each[i+1].toLowerCase());
+                    order_date.set(order_date.get(Calendar.YEAR), month-1, day);
                 } else {
-                    int month = Integer.parseInt(current.split("\\.")[1])-1;
-                    order_date.set(order_date.get(Calendar.YEAR), month, day);
+                    month = Integer.parseInt(current.split("\\.")[1]);
+                    order_date.set(order_date.get(Calendar.YEAR), month-1, day);
                 }
-
+                current_order.setDay(String.valueOf(day) + "." + String.valueOf(month));
                 //Year, Month(starts at 0), Day, Hour, Minute, Second
                 current_order.setTime(order_date.getTime());
             }
 
             //if "Uhr" or "h" then time is on index -1 of current / need to differentiate between single digit and ":" times
             if(current.contains("uhr") || current.equalsIgnoreCase("h") || current.equalsIgnoreCase("h,")) {
-                if(order_each[i-1].contains(":")) {
-                    int hour = Integer.parseInt(order_each[i-1].split(":")[0]);
-                    int minute = Integer.parseInt(order_each[i-1].split(":")[1]);
-                    order_date.set(Calendar.HOUR_OF_DAY, hour);
-                    order_date.set(Calendar.MINUTE, minute);
-                } else {
-                    int hour = Integer.parseInt(order_each[i-1]);
+                int hour = 0;
+                int minute = 0;
+                if (order_each[i+1].contains("abends")) {
+                    if(Integer.parseInt(order_each[i - 1]) <= 12) {
+                        hour = getTimePM(order_each[i - 1]);
+                    } else {
+                        hour = Integer.parseInt(order_each[i - 1]);
+                    }
                     order_date.set(Calendar.HOUR_OF_DAY, hour);
                     order_date.set(Calendar.MINUTE, 0);
+                } else {
+                    if (order_each[i - 1].contains(":")) {
+                        hour = Integer.parseInt(order_each[i - 1].split(":")[0]);
+                        minute = Integer.parseInt(order_each[i - 1].split(":")[1]);
+                        order_date.set(Calendar.HOUR_OF_DAY, hour);
+                        order_date.set(Calendar.MINUTE, minute);
+                    } else {
+                        hour = Integer.parseInt(order_each[i - 1]);
+                        order_date.set(Calendar.HOUR_OF_DAY, hour);
+                        order_date.set(Calendar.MINUTE, 0);
+                    }
+                }
+                if(minute == 0) {
+                    current_order.setDaytime(hour + ":00");
+                } else {
+                    current_order.setDaytime(hour + ":" + minute);
                 }
                 current_order.setTime(order_date.getTime());
             }
@@ -86,6 +105,23 @@ public class OrderParser {
         }
 
             System.out.println(current_order);
+    }
+
+    private int getTimePM(String time) {
+        return switch (time) {
+            case "1" -> 13;
+            case "2" -> 14;
+            case "3" -> 15;
+            case "4" -> 16;
+            case "5" -> 17;
+            case "6" -> 18;
+            case "7" -> 19;
+            case "8" -> 20;
+            case "9" -> 21;
+            case "10" -> 22;
+            case "11" -> 23;
+            default -> 24;
+        };
     }
 
     private int parseAmount(String amount) {
