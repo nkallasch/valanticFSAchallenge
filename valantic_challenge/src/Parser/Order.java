@@ -55,11 +55,9 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
-                name +
+        return  name +
                 ", " + day +
-                ", time=" + time +
-                ", amount_customers=" + amount_customers +
-                '}';
+                ", " + time +
+                ", für: " + amount_customers + " Person(en)";
     }
 }

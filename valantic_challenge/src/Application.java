@@ -13,9 +13,8 @@ public class Application {
         };
 
         OrderParser op = new OrderParser();
-        op.parseOrder(orders[0]);
-        op.parseOrder(orders[1]);
-        op.parseOrder(orders[2]);
-        op.parseOrder(orders[3]);
+        for (String i : orders) {
+            op.parseOrder(i);
+        }
     }
 }
