@@ -60,6 +60,7 @@ public class OrderParser {
                     current.equalsIgnoreCase("grüße"))
             {
                 int name_length = order_each.length - i;
+                //get name by looking at the last few words of the order
                 current_order.setName(parseName(order_each, name_length));
             }
 
@@ -71,10 +72,11 @@ public class OrderParser {
     private void parseDay(String[] order_each, Order current_order, Calendar order_date, int i, String current) {
         int day = Integer.parseInt(current.split("\\.")[0]);
         int month = 0;
-
+        // if month is a word
         if (current.contains(".") && months.containsKey(order_each[i +1].toLowerCase())) {
             month = months.get(order_each[i +1].toLowerCase());
             order_date.set(order_date.get(Calendar.YEAR), month-1, day);
+        // if month is a number
         } else {
             month = Integer.parseInt(current.split("\\.")[1]);
             order_date.set(order_date.get(Calendar.YEAR), month-1, day);
@@ -87,20 +89,25 @@ public class OrderParser {
     private void parseDaytime(String[] order_each, Order current_order, Calendar order_date, int i) {
         int hour = 0;
         int minute = 0;
+        // if pm
         if (order_each[i +1].contains("abends")) {
             if(Integer.parseInt(order_each[i - 1]) <= 12) {
                 hour = getTimePM(order_each[i - 1]);
+            // maybe someone wrote 14 pm, so "pm" can be disregarded
             } else {
                 hour = Integer.parseInt(order_each[i - 1]);
             }
             order_date.set(Calendar.HOUR_OF_DAY, hour);
             order_date.set(Calendar.MINUTE, 0);
+        // if just 13:00 or 13 or 8 am,...
         } else {
+            // if ":" in time split at ":" and get first and second digit
             if (order_each[i - 1].contains(":")) {
                 hour = Integer.parseInt(order_each[i - 1].split(":")[0]);
                 minute = Integer.parseInt(order_each[i - 1].split(":")[1]);
                 order_date.set(Calendar.HOUR_OF_DAY, hour);
                 order_date.set(Calendar.MINUTE, minute);
+            // if only one digit (9 am)
             } else {
                 hour = Integer.parseInt(order_each[i - 1]);
                 order_date.set(Calendar.HOUR_OF_DAY, hour);
