@@ -42,7 +42,7 @@ public class OrderParser {
                 }
 
                 //Year, Month(starts at 0), Day, Hour, Minute, Second
-                current_order.setDay(order_date.getTime());
+                current_order.setTime(order_date.getTime());
             }
 
             //if "Uhr" or "h" then time is on index -1 of current / need to differentiate between single digit and ":" times

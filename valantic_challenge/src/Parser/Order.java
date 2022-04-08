@@ -8,8 +8,6 @@ public class Order {
 
     private String name;
 
-    private Date day;
-
     private Date time;
 
     private int amount_customers;
@@ -17,7 +15,6 @@ public class Order {
     public Order() {
         Calendar zero = Calendar.getInstance();
         zero.set(0, 0, 0, 0, 0, 0);
-        this.setDay(zero.getTime());
         this.setTime(zero.getTime());
     }
 
@@ -27,14 +24,6 @@ public class Order {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Date getDay() {
-        return day;
-    }
-
-    public void setDay(Date day) {
-        this.day = day;
     }
 
     public Date getTime() {
@@ -56,7 +45,6 @@ public class Order {
     @Override
     public String toString() {
         return  name +
-                ", " + day +
                 ", " + time +
                 ", für: " + amount_customers + " Person(en)";
     }
