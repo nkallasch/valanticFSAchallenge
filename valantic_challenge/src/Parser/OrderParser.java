@@ -79,7 +79,7 @@ public class OrderParser {
             month = Integer.parseInt(current.split("\\.")[1]);
             order_date.set(order_date.get(Calendar.YEAR), month-1, day);
         }
-        current_order.setDay(String.valueOf(day) + "." + String.valueOf(month));
+        current_order.setDay(day + "." + month);
         //Year, Month(starts at 0), Day, Hour, Minute, Second
         current_order.setTime(order_date.getTime());
     }
