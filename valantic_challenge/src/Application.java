@@ -10,7 +10,7 @@ public class Application {
                 "Sehr geehrte Damen Herren, wir würden gern am 9. April 9:45 Uhr mit sechs Leuten zum Brunch kommen, Mit freundlichen Grüßen Maria Meier",
                 "Guten Tag, einen Tisch für 8 Mann am 1.5. 9 Uhr abends, Gruß Franz Schulze",
                 "Hallo, fünf Tische für eine Person am 13. Dezember um 15:23 h, Liebe Grüße Nils Kallasch",
-                "He, 5 Frau 5.3. 11 h abends, liebe grüße Nils K"
+                "He, 5 Frau 5.3. 11 h abends, liebe grüße Josefine Peter Franzen"
         };
 
         OrderParser op = new OrderParser();
